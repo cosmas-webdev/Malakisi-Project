@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ===== MÉTADONNÉES ===== -->
+  <title>Cosmas · Programme intensif Malakisi</title>
+  <meta name="description" content="Transformez votre carrière avec Malakisi : programme intensif de 3 mois en développement web, mobile, IA et cloud.">
+  <meta name="author" content="Cosmas Musafiri">
+  <meta name="robots" content="index, follow">
+
+  <!-- ===== POLICES ===== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- ===== STYLE CRITIQUE ===== -->
+  <style>
+    * {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    /* Styles pour le menu mobile */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 280px;
+      height: 100vh;
+      background-color: white;
+      box-shadow: 2px 0 20px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      padding: 2rem 1.5rem;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-y: auto;
+    }
+    
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+    
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    body.menu-open {
+      overflow: hidden;
+    }
+    
+    /* Animation du bouton burger */
+    .burger-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+    
+    .burger-btn span {
+      width: 100%;
+      height: 2px;
+      background-color: #333;
+      transition: all 0.3s ease;
+      border-radius: 4px;
+    }
+    
+    .burger-btn.active span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+    }
+    
+    .burger-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .burger-btn.active span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
+    }
+    
+    /* Bouton fermeture du menu mobile */
+    .close-menu {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f3f4f6;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    
+    .close-menu:hover {
+      background-color: #e5e7eb;
+    }
+    
+    /* Liens du menu mobile */
+    .mobile-nav-link {
+      display: block;
+      padding: 0.75rem 0;
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: #1f2937;
+      text-decoration: none;
+      border-bottom: 1px solid #f3f4f6;
+      transition: color 0.2s ease;
+    }
+    
+    .mobile-nav-link:hover {
+      color: #f59e0b;
+    }
+    
+    .mobile-nav-link:last-child {
+      border-bottom: none;
+    }
+    
+    /* Bouton de changement de thème */
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+    
+    .theme-toggle:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Thème sombre */
+    body.dark-theme {
+      background-color: #1a1a1a;
+      color: #ffffff;
+    }
+    
+    body.dark-theme header {
+      border-bottom-color: #333;
+    }
+    
+    body.dark-theme .bg-slate-100 {
+      background-color: #2d2d2d;
+    }
+    
+    body.dark-theme .text-gray-700,
+    body.dark-theme .text-gray-600 {
+      color: #d1d5db;
+    }
+    
+    body.dark-theme .bg-orange-100 {
+      background-color: #3d2e1e;
+    }
+    
+    body.dark-theme .bg-slate-200 {
+      background-color: #404040;
+    }
+    
+    body.dark-theme .bg-slate-600 {
+      background-color: #4b5563;
+    }
+    
+    body.dark-theme .bg-white {
+      background-color: #2d2d2d;
+      border-color: #404040;
+      color: #ffffff;
+    }
+    
+    body.dark-theme .border-gray-200 {
+      border-color: #404040;
+    }
+    
+    body.dark-theme footer {
+      background-color: #2d2d2d;
+    }
+    
+    body.dark-theme .text-gray-800 {
+      color: #ffffff;
+    }
+    
+    /* Styles pour le thème sombre dans le menu mobile */
+    body.dark-theme .mobile-menu {
+      background-color: #2d2d2d;
+      color: #ffffff;
+    }
+    
+    body.dark-theme .mobile-nav-link {
+      color: #ffffff;
+      border-bottom-color: #404040;
+    }
+    
+    body.dark-theme .close-menu {
+      background-color: #404040;
+      color: #ffffff;
+    }
+    
+    body.dark-theme .close-menu:hover {
+      background-color: #4b5563;
+    }
+    
+    body.dark-theme .burger-btn span {
+      background-color: #ffffff;
+    }
+    
+    body.dark-theme .theme-toggle:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  </style>
+
+  <!-- ===== FEUILLE DE STYLE PRINCIPALE ===== -->
+  <link rel="stylesheet" href="output.css">
+</head>
+
+<body class="max-w-4xl m-auto relative transition-colors duration-300">
+
+  <!-- ===== HEADER ===== -->
+  <header class="flex justify-between h-20 px-3 items-center border-b-2 border-gray-200 transition-colors duration-300">
+    <a href="/" class="hover:opacity-80 transition-opacity" aria-label="Cosmas - accueil">
+      <h1 class="text-2xl font-bold">
+        Cosmas<span class="font-bold text-orange-300">.</span>
+      </h1>
+    </a>
+<!-- ===== NAVIGATION DESKTOP AVEC ESPACEMENT PROFESSIONNEL ===== -->
+<nav class="hidden lg:flex lg:gap-12 xl:gap-14" aria-label="Navigation principale">
+<a href="/" class="hover:text-orange-300 transition-all font-medium text-lg tracking-wide whitespace-nowrap px-3" aria-current="page">Accueil</a>
+<a href="/" class="hover:text-orange-300 transition-all font-medium text-lg tracking-wide whitespace-nowrap px-3" aria-current="page">A propos</a>
+<a href="/equipe" class="hover:text-orange-300 transition-all font-medium text-lg tracking-wide whitespace-nowrap px-3" aria-current="page"> Notre équipe</a>
+ 
+  <a href="/contacts" class="hover:text-orange-300 transition-all font-medium text-lg tracking-wide whitespace-nowrap">
+    Contacts
+  </a>
+
+</nav>
+    <div class="flex items-center gap-4">
+      <!-- Bouton de changement de thème -->
+      <button id="themeToggle" class="theme-toggle" aria-label="Changer le thème">
+        <svg id="sunIcon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="hidden">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg id="moonIcon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+
+      <!-- Bouton Inscription DESKTOP (caché sur mobile) -->
+      <button type="button" class="hidden lg:block px-8 py-2.5 bg-orange-200 text-black font-bold rounded-md hover:bg-orange-300 transition-colors focus:ring-2 focus:ring-orange-400 focus:outline-none whitespace-nowrap">
+        Inscrivez-vous
+      </button>
+
+      <!-- Bouton Burger Mobile (UNIQUEMENT sur mobile) -->
+      <button id="menuBurger" class="lg:hidden burger-btn" aria-label="Menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== OVERLAY MOBILE ===== -->
+  <div id="menuOverlay" class="menu-overlay lg:hidden"></div>
+
+  <!-- ===== MENU MOBILE (panneau latéral) ===== -->
+  <div id="mobileMenu" class="mobile-menu lg:hidden">
+    <!-- Bouton fermeture (X) -->
+    <button id="closeMenuBtn" class="close-menu" aria-label="Fermer le menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6 6 18M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <!-- Logo dans le menu mobile -->
+    <div class="mb-8 mt-8">
+      <span class="text-2xl font-bold">Cosmas<span class="text-orange-300">.</span></span>
+    </div>
+
+    <!-- Liens de navigation mobile -->
+    <nav class="flex flex-col gap-2" aria-label="Navigation mobile">
+      <a href="/" class="mobile-nav-link">Accueil</a>
+      <a href="/apropos" class="mobile-nav-link">A propos</a>
+      <a href="/equipe" class="mobile-nav-link">Notre équipe</a>
+      <a href="/contacts" class="mobile-nav-link">Contacts</a>
+    </nav>
+
+    <!-- Bouton inscription dans le menu mobile -->
+    <button type="button" class="mt-8 w-full p-3 bg-orange-200 text-black font-bold rounded-md hover:bg-orange-300 transition-colors">
+      Inscrivez-vous
+    </button>
+  </div>
+
+  <!-- ===== MAIN ===== -->
+  <main>
+    <!-- ===== SECTION HERO ===== -->
+    <section class="w-full lg:h-[50vh] bg-slate-100 lg:mt-4 rounded-md px-6 flex flex-col lg:flex-row gap-5 transition-colors duration-300">
+      <div class="flex-1 justify-center flex-col gap-3">
+        <h1 class="lg:text-5xl font-bold text-4xl pt-6 lg:pt-0">
+          Transformez votre carrière avec
+          <span class="text-orange-400">Malakisi</span>
+        </h1>
+        <p class="text-gray-700">
+          Un programme intensif de 3 mois en développement de logiciels modernes
+        </p>
+        <button type="button" class="w-fit bg-orange-400 text-white font-bold p-3 rounded-sm hover:bg-orange-500 transition-colors focus:ring-2 focus:ring-orange-400 focus:outline-none">
+          Inscrivez-vous dès maintenant
+        </button>
+      </div>
+      <div class="flex flex-1">
+        <img src="assets/img2.png" alt="Étudiants en formation Malakisi" class="w-full">
+      </div>
+    </section>
+
+    <!-- ===== SECTION PROGRAMME ===== -->
+    <section id="programme" class="w-full mt-8 h-auto px-3">
+      <h2 class="text-center text-4xl font-bold mb-4">
+        Notre programme d'études
+      </h2>
+      <p class="text-center pt-2 text-gray-600">
+        Notre programme est structuré en plusieurs modules couvrant différents
+        stacks technologiques.
+      </p>
+
+      <div class="flex gap-3 flex-wrap mt-3 lg:flex-row flex-col">
+        <!-- Carte Développement Web -->
+        <div class="flex-1 bg-orange-100 p-4 rounded-md hover:shadow-md transition-shadow">
+          <div class="size-10 flex justify-center items-center rounded-md bg-slate-200">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+              <path d="M2 12h20"/>
+            </svg>
+          </div>
+          <p class="pt-3 font-bold text-center">Développement Web</p>
+        </div>
+
+        <!-- Carte Développement Mobile -->
+        <div class="flex-1 bg-orange-100 p-4 rounded-md hover:shadow-md transition-shadow">
+          <div class="size-10 flex justify-center items-center rounded-md bg-slate-200">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone" aria-hidden="true">
+              <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+              <path d="M12 18h.01"/>
+            </svg>
+          </div>
+          <p class="pt-3 font-bold text-center">Développement Mobile</p>
+        </div>
+
+        <!-- Carte IA -->
+        <div class="flex-1 bg-orange-100 p-4 rounded-md hover:shadow-md transition-shadow">
+          <div class="size-10 flex justify-center items-center rounded-md bg-slate-200">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot" aria-hidden="true">
+              <path d="M12 8V4H8"/>
+              <rect width="16" height="12" x="4" y="8" rx="2"/>
+              <path d="M2 14h2"/>
+              <path d="M20 14h2"/>
+              <path d="M15 13v2"/>
+              <path d="M9 13v2"/>
+            </svg>
+          </div>
+          <p class="pt-3 font-bold text-center">Intelligence Artificielle</p>
+        </div>
+
+        <!-- Carte Cloud Computing -->
+        <div class="flex-1 bg-orange-100 p-4 rounded-md hover:shadow-md transition-shadow">
+          <div class="size-10 flex justify-center items-center rounded-md bg-slate-200">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cloud" aria-hidden="true">
+              <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+            </svg>
+          </div>
+          <p class="pt-3 font-bold text-center">Cloud Computing</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION AVANTAGES ===== -->
+    <section id="avantages" class="mt-4 pt-10 flex flex-col lg:flex-row px-4 gap-3 mb-5">
+      <div class="flex-1">
+        <img src="assets/img3.jpg" alt="Session de travail Malakisi" class="w-full rounded-md p-4">
+      </div>
+
+      <div class="flex-1 bg-slate-100 flex justify-center items-center flex-col px-6 rounded-md transition-colors duration-300">
+        <h2 class="text-4xl font-bold">Pourquoi choisir Malakisi ?</h2>
+        <p class="mt-2 text-gray-700">
+          <span class="text-orange-400 font-semibold">Malakisi</span> est un
+          programme annuel, composé de sessions intensives de 3 mois, dédié à
+          l'apprentissage des technologies modernes de développement logiciel.
+          Que vous soyez intéressé par le développement web, mobile,
+          l'intelligence artificielle ou le cloud, notre programme est conçu
+          pour vous préparer aux défis du monde technologique.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== SECTION CONTACT ===== -->
+    <section id="contact" class="mt-5 p-4">
+      <h2 class="text-4xl font-bold">Contactez-nous</h2>
+      <p class="text-gray-600 mt-1">
+        Voulez-vous nous écrire ou apprendre plus sur nos formations ?
+        Complétez ce formulaire !
+      </p>
+
+      <div class="mt-3 flex gap-3 flex-col lg:flex-row">
+        <!-- FORMULAIRE -->
+        <form action="#" method="POST" class="flex-1 bg-slate-600 p-4 rounded-md flex flex-col gap-3 transition-colors duration-300">
+          <!-- Nom -->
+          <div class="flex flex-col">
+            <label for="nom" class="text-white font-medium">Votre nom :</label>
+            <input type="text" name="nom" id="nom" placeholder="Cosmas Musafiri" required
+                   class="border p-3 bg-white focus:border-orange-400 rounded-md outline-none transition-all">
+          </div>
+
+          <!-- Email -->
+          <div class="flex flex-col">
+            <label for="email" class="text-white font-medium">Votre adresse mail :</label>
+            <input type="email" name="email" id="email" placeholder="cmusafirimugongo@email.com" required
+                   class="border p-3 bg-white focus:border-orange-400 rounded-md outline-none transition-all">
+          </div>
+
+          <!-- Téléphone -->
+          <div class="flex flex-col">
+            <label for="numtel" class="text-white font-medium">Votre numéro de téléphone :</label>
+            <input type="tel" name="numtel" id="numtel" placeholder="0971312601" required
+                   class="border p-3 bg-white focus:border-orange-400 rounded-md outline-none transition-all">
+          </div>
+
+          <!-- Message -->
+          <div class="flex flex-col">
+            <label for="message" class="text-white font-medium">Votre message :</label>
+            <textarea name="message" id="message" rows="4" placeholder="Votre message ici" required
+                      class="border p-3 bg-white focus:border-orange-400 rounded-md outline-none transition-all resize-y"></textarea>
+          </div>
+
+          <!-- Bouton -->
+          <button type="submit" class="flex items-center justify-center gap-3 bg-orange-400 p-3 text-white font-bold rounded-md hover:bg-orange-500 transition-colors focus:ring-2 focus:ring-orange-300 focus:outline-none">
+            Envoyer maintenant
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send" aria-hidden="true">
+              <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/>
+              <path d="m21.854 2.147-10.94 10.939"/>
+            </svg>
+          </button>
+        </form>
+
+        <!-- CARTE -->
+        <iframe class="flex-1 rounded-md" 
+                src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d7982844.553196534!2d-41.030635476260805!3d-12.32431261427037!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2scd!4v1731932504050!5m2!1sen!2scd"
+                width="600" height="450" style="border:0;" 
+                allowfullscreen="" loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Localisation sur Google Maps">
+        </iframe>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="w-full bg-orange-100 h-auto py-4 mb-2 rounded-md text-center flex justify-center items-center transition-colors duration-300">
+    <p class="text-gray-800">
+      <span class="font-bold text-orange-400">Cosmas Musafiri</span>, tous droits réservés © <span id="current-year">2024</span>
+    </p>
+  </footer>
+
+  <!-- ===== SCRIPT POUR LE MENU MOBILE ET LE THÈME ===== -->
+  <script>
+    (function() {
+      const body = document.body;
+      
+      // Menu mobile
+      const menuBurger = document.getElementById('menuBurger');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const menuOverlay = document.getElementById('menuOverlay');
+      const closeMenuBtn = document.getElementById('closeMenuBtn');
+
+      if (menuBurger && mobileMenu && menuOverlay && closeMenuBtn) {
+        function openMenu() {
+          mobileMenu.classList.add('open');
+          menuOverlay.classList.add('active');
+          body.classList.add('menu-open');
+          menuBurger.classList.add('active');
+          menuBurger.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeMenu() {
+          mobileMenu.classList.remove('open');
+          menuOverlay.classList.remove('active');
+          body.classList.remove('menu-open');
+          menuBurger.classList.remove('active');
+          menuBurger.setAttribute('aria-expanded', 'false');
+        }
+
+        menuBurger.addEventListener('click', openMenu);
+        closeMenuBtn.addEventListener('click', closeMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+
+        document.addEventListener('keydown', function(event) {
+          if (event.key === 'Escape' && mobileMenu.classList.contains('open')) {
+            closeMenu();
+          }
+        });
+
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+          link.addEventListener('click', closeMenu);
+        });
+      }
+
+      // Changement de thème (clair/sombre)
+      const themeToggle = document.getElementById('themeToggle');
+      const sunIcon = document.getElementById('sunIcon');
+      const moonIcon = document.getElementById('moonIcon');
+      
+      if (themeToggle && sunIcon && moonIcon) {
+        // Vérifier le thème sauvegardé
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+          body.classList.add('dark-theme');
+          sunIcon.classList.remove('hidden');
+          moonIcon.classList.add('hidden');
+        } else {
+          sunIcon.classList.add('hidden');
+          moonIcon.classList.remove('hidden');
+        }
+
+        themeToggle.addEventListener('click', function() {
+          if (body.classList.contains('dark-theme')) {
+            body.classList.remove('dark-theme');
+            localStorage.setItem('theme', 'light');
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+          } else {
+            body.classList.add('dark-theme');
+            localStorage.setItem('theme', 'dark');
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+          }
+        });
+      }
+
+      // Année dynamique
+      const yearElement = document.getElementById('current-year');
+      if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+      }
+    })();
+  </script>
+</body>
+</html>
