@@ -63,22 +63,6 @@ Ce projet démontre la maîtrise des compétences suivantes :
 | **JavaScript ES6+** | Interactivité et fonctionnalités dynamiques |
 | **Font Awesome** | Icônes vectorielles |
 
----
-
-## 📁 **Structure du Projet**
-Malakisi-Project/
-├── index.html # Page principale
-├── assets/
-│ ├── css/
-│ │ └── style.css # Styles personnalisés
-│ ├── js/
-│ │ └── main.js # JavaScript principal
-│ └── images/ # Images et médias
-├── LICENSE
-└── README.md
-
----
-
 ## 🚀 **Installation et Utilisation**
 
 ### Lancement rapide
